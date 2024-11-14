@@ -7,7 +7,7 @@ core.register_chatcommand("showclan", {
         local playercs = param .. "-clan" --player clan storage
         if storage:get_string(playercs) ~= nil then
             if param == "" then
-                core.chat_send_player(player, storage:get_string(player))
+                core.chat_send_player(player, storage:get_string(playercs))
             else
                 local player_clan = storage:get_string(param)
                 core.chat_send_player(player, param .. " is of the clan " .. storage:get_string(playercs))
