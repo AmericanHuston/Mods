@@ -10,13 +10,14 @@ core.register_privilege("eventadmin", {
 
 function clansmod.add_to_clan(issuer, playername, random, clan) --MUST BE PLAYER NAME, NOT USERDATA
     local playercs = playername .. "-clan"
-    if random then --random is a bool
-        local newclan = clansmod.clans[math.random(1,clansmod.tablelength(clansmod.clans))]
+    local newclan
+    if random == true then --random is a bool
+        newclan = clansmod.clans[math.random(1, #clansmod.clans)] --have to use the len operator (#)
     else
-        local newclan = clan
+        newclan = clan
     end
     if storage:get_string(playercs) == nil then
-        storage:set_string(playername, newclan)
+        storage:set_string(playercs, newclan)
         if issuer ~= nil then
             core.chat_send_player(issuer, "Your clan has been set to " .. newclan)
         end
@@ -35,9 +36,3 @@ core.register_on_joinplayer(function(player, last_login)
     clansmod.add_to_clan(nil, player, true)
 end
 )
-
-function clansmod.tablelength(tbl)
-    local count = 0
-    for _ in pairs(tbl) do count = count + 1 end
-    return count
-end

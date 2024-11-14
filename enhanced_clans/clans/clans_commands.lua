@@ -7,13 +7,11 @@ core.register_chatcommand("showclan", {
         local playercs = param .. "-clan" --player clan storage
         if storage:get_string(playercs) ~= nil then
             if param == "" then
-                core.chat_send_player(player, storage:get_string(playercs))
+                core.chat_send_player(player, "Your clan is " .. storage:get_string(player .. "-clan"))
             else
                 local player_clan = storage:get_string(playercs)
-                core.chat_send_player(player, param .. " is of the clan " .. storage:get_string(playercs))
+                core.chat_send_player(player, param .. " is of the clan " .. player_clan)
             end
-        else
-            core.chat_send_player(player, "Either the player doesn't exist, or you did something wrong")
         end
     end,
     description = "Usage: /showclan <player>"
@@ -25,10 +23,11 @@ core.register_chatcommand("setclan", {
         local player = core.get_player_by_name(name)
         local player = player:get_player_name()
         if param ~= "" then
-            local msg, to = param:match("^([%a%d]+) (.+)$")
+            local msg, to = param:match("^([%a%d_-]+) (.+)$")
             for i,v in pairs(clansmod.clans) do
                 if to == v then
                     success = true
+                    core.chat_send_player(player, "Match found")
                 end
             end
             if success then
@@ -50,7 +49,7 @@ core.register_chatcommand("clearclan", {
         local player = core.get_player_by_name(name)
         local player = player:get_player_name()
         if param ~= "" then
-            local msg, to = param:match("^([%a%d]+)$")
+            local msg = param:match("^([%a%d_-]+)$")
             local playercs = msg .. "-clan" --player clan storage
             storage:set_string(playercs, nil)
             core.chat_send_player(player, "Set player " .. msg .. "'s clan to nil")
@@ -67,7 +66,7 @@ core.register_chatcommand("testadd", {
             core.chat_send_player(player, "You need eventadmin for this")
         else
             if param ~= "" then
-                local msg, to = param:match("^([%a%d]+)$")
+                local msg = param:match("^([%a%d_-]+)$")
                 clansmod.add_to_clan(player, msg, true)
             end
         end
