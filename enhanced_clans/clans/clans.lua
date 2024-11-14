@@ -1,6 +1,6 @@
 local storage = core.get_mod_storage()
 clansmod = {}
-clansmod.clans = {"mesa", "forest", "river", "grassland"}
+clansmod.clans = {"mesa", "mountain", "river", "grassland"}
 
 core.register_privilege("eventadmin", {
     description = "Can issue all clan commands",
@@ -11,7 +11,7 @@ core.register_privilege("eventadmin", {
 function clansmod.add_to_clan(issuer, playername, random, clan) --MUST BE PLAYER NAME, NOT USERDATA
     local playercs = playername .. "-clan"
     if random then --random is a bool
-        local newclan = clansmod.clans[math.random(1,4)]
+        local newclan = clansmod.clans[math.random(1,clansmod.tablelength(clansmod.clans))]
     else
         local newclan = clan
     end
@@ -36,3 +36,8 @@ core.register_on_joinplayer(function(player, last_login)
 end
 )
 
+function clansmod.tablelength(tbl)
+    local count = 0
+    for _ in pairs(tbl) do count = count + 1 end
+    return count
+end
