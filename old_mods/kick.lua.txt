@@ -1,0 +1,7 @@
+local reason = 'Leme host free plan time limit reached, server shutting down'
+
+minetest.register_on_shutdown(function empty_server(empty_server)
+minetest.get_connected_players(players)
+minetest.disconnect_player(players, [reason])
+end)
+minetest.chat

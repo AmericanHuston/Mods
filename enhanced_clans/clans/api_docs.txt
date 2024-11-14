@@ -1,0 +1,17 @@
+A little to know about me and my coding:
+I'm by no means a professional coder, and as such this code isn't
+great. That being said, it all should work as intended. It's all 
+still under development.
+
+Alright, the cool stuff:
+tables:
+    clansmod.clans
+        --- The avaliable clans, by default
+    end
+end
+
+functions:
+    clansmod.add_to_clan(issuer<string>, playername<string>, random<bool>, clan<optional,string>)
+        --- Sets a player to a clan, if one isn't given
+        --- its randomly selected from clansmod.clans
+    clansmod.remove_from_clan
