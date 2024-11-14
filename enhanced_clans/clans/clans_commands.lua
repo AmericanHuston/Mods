@@ -27,7 +27,7 @@ core.register_chatcommand("setclan", {
         if param ~= "" then
             local msg, to = param:match("^([%a%d]+) (.+)$")
             for i,v in pairs(clansmod.clans) do
-                if msg == v then
+                if to == v then
                     success = true
                 end
             end
@@ -39,7 +39,7 @@ core.register_chatcommand("setclan", {
                 core.chat_send_player(player, "Usage: /setclan <player> <clan>")
             end
         else
-            core.chat_send_player(player, msg .. "Isn't a valid clan")
+            core.chat_send_player(player, to .. "Isn't a valid clan")
         end
     end,
     description = "Usage: /setclan <player> <clan>"
