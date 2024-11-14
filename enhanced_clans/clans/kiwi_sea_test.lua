@@ -3,6 +3,7 @@ local storage = core.get_mod_storage()
 core.register_on_dieplayer(function(player, reason)
     --clansmod.killer(player, player)
     core.chat_send_player(player, reason)
+end
 )
 
 core.register_on_joinplayer(function(player, last_login)
