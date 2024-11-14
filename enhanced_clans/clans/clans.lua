@@ -41,5 +41,3 @@ function clansmod.tablelength(tbl)
     for _ in pairs(tbl) do count = count + 1 end
     return count
 end
-
-function 
