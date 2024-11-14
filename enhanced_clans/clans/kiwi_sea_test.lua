@@ -8,8 +8,7 @@ end
 
 core.register_on_joinplayer(function(player, last_login)
     if last_login == nil then
-        local klevel = storage:set_int(killer .. "-level", 0)
-        local vlevel = storage:set_int(victim .. "-level", 0)
+        storage:set_int(player .. "-level", 0)
     end
 end    
 )
@@ -20,9 +19,11 @@ function clansmod.killer(killer, victim)
 
     if vlevel ~= 0 then
         vlevel = vlevel - 1
+        storage:set_int(victim .. "-level", vlevel)
     end
 
     if klevel ~= 5 then
         klevel = klevel + 1
+        storage:set_int(killer .. "-level", klevel)
     end
 end
