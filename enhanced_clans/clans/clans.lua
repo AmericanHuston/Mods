@@ -17,6 +17,7 @@ function clansmod.add_clan(issuer, clanname)
         else
             found = false
     end
+end
     
 
 function clansmod.add_to_clan(issuer, playername, random, clan) --MUST BE PLAYER NAME, NOT USERDATA
