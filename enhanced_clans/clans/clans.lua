@@ -34,5 +34,8 @@ end
 core.register_on_joinplayer(function(player, last_login)
     local player = player:get_player_name()
     clansmod.add_to_clan(nil, player, true)
+    if last_login == nil then
+        storage:set_int(player .. "-level", 0)
+    end
 end
 )
