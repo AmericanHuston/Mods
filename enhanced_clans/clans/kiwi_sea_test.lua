@@ -16,3 +16,4 @@ function clansmod.players_per_team(clan)
 
     local online = #ptable
 end
+--hi
