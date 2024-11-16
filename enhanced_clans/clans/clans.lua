@@ -2,7 +2,7 @@ local storage = core.get_mod_storage()
 clansmod = {}
 clansmod.clans = {"mesa", "mountain", "river", "grassland"}
 
-core.register_on_prejoinplayer()
+--core.register_on_prejoinplayer()
 
 core.register_privilege("eventadmin", {
     description = "Can issue all clan commands",
@@ -16,6 +16,7 @@ function clansmod.add_clan(issuer, clanname)
             found = true
         else
             found = false
+        end
     end
 end
     
