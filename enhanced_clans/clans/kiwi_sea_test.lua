@@ -9,3 +9,6 @@ core.register_chatcommand("assign_clan", {
 })
 
 function clansmod.players_per_team(clan)
+
+    for _, player in ipairs(minetest.get_connected_players()) do
+        table.insert(ptable, player:get_player_name())
