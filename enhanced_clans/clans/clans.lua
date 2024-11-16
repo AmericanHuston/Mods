@@ -1,7 +1,11 @@
 local storage = core.get_mod_storage()
 clansmod = {}
-if storage:
 clansmod.clans = {"mesa", "mountain", "river", "grassland"}
+if storage:get_string("clans-table") == nil then
+    storage:set_string("clans-table", core.serialize(clansmod.table))
+else
+    clansmod.clans = core.deserialize(storage:get_string("clans-table"), safe = true)
+end
 
 --core.register_on_prejoinplayer()
 
@@ -20,7 +24,8 @@ function clansmod.add_clan(issuername, clanname)
         end
         if found == true then
             core.chat_send_player(player, "The clan " .. clanname .. " name is already taken!")
-        else
+        elseif found == false then
+
             
     end
 end
