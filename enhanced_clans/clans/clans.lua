@@ -1,5 +1,6 @@
 local storage = core.get_mod_storage()
 clansmod = {}
+if storage:
 clansmod.clans = {"mesa", "mountain", "river", "grassland"}
 
 --core.register_on_prejoinplayer()
@@ -9,7 +10,7 @@ core.register_privilege("eventadmin", {
     give_to_singleplayer = true
 })
 
-function clansmod.add_clan(issuer, clanname)
+function clansmod.add_clan(issuername, clanname)
     local found
     for i,v in pairs(clansmod.clans) do
         if v == clanname then
@@ -17,6 +18,10 @@ function clansmod.add_clan(issuer, clanname)
         else
             found = false
         end
+        if found == true then
+            core.chat_send_player(player, "The clan " .. clanname .. " name is already taken!")
+        else
+            
     end
 end
     
