@@ -10,15 +10,20 @@ core.register_chatcommand("assign_clan", {
 })
 
 function clansmod.players_per_clan(clan)
-    for _, player in ipairs(minetest.get_connected_players()) do
+    local members
+
+    for _, player in ipairs(core.get_connected_players()) do
         table.insert(ptable, player:get_player_name())
-        
+        local playercs = player:get_player_name() .. "-clan"
+        if player:get_player_name()
+    end
+
 end
 
 
 function clansmod.players_online()
     local ptable
-    for _, player in ipairs(minetest.get_connected_players()) do
+    for _, player in ipairs(core.get_connected_players()) do
         table.insert(ptable, player:get_player_name())
     end
 
