@@ -1,4 +1,4 @@
-clansmod.add_to_clan(issuer, playername, false, tbd)
+--clansmod.add_to_clan(issuer, playername, false, tbd)
 
 -- core.register_chatcommand("assign_clan", {
 --     func = function(name, param)
