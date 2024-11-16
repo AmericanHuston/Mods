@@ -25,8 +25,8 @@ function clansmod.add_clan(issuername, clanname)
         if found == true then
             core.chat_send_player(player, "The clan " .. clanname .. " name is already taken!")
         elseif found == false then
-
-            
+            table.insert(clansmod.clans, clanname)
+        end 
     end
 end
     
