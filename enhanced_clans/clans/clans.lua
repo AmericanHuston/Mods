@@ -15,23 +15,28 @@ core.register_privilege("eventadmin", {
 })
 
 function clansmod.add_clan(issuername, clanname)
-    local found
-    for i,v in pairs(clansmod.clans) do
-        if v == clanname then
-            found = true
-        else
-            found = false
-        end
+    local found = clansmod.clan_exists(clanname)
         if found == true then
             core.chat_send_player(player, "The clan " .. clanname .. " name is already taken!")
         elseif found == false then
             table.insert(clansmod.clans, clanname)
-            storage:set_string("clans-table", core.serialize(clansmod.table))
+            storage:set_string("clans-table", core.serialize(clansmod.clans))
             core.chat_send_all("A new clan has been created!")
         end 
     end
 end
-    
+
+function clansmod.delete_clan(issuername, clanname)
+    local found = clansmod.clan_exists(clanname)
+    local clanpos
+    if found == true then
+        for i,v in ipairs(clansmod.clans) do
+            if v == clanname then
+                clanpos = i
+            end
+        end
+        table.remove(clansmod.clans, clanpos)
+        storage:set_string(clansmod, core.serialize(clansmod.clans))
 
 function clansmod.add_to_clan(issuer, playername, random, clan) --MUST BE PLAYER NAME, NOT USERDATA
     local playercs = playername .. "-clan"
@@ -64,3 +69,15 @@ core.register_on_joinplayer(function(player, last_login)
     end
 end
 )
+
+function clansmod.clan_exists(clanname)
+    local found
+    for i,v in pairs(clansmod.clans) do
+        if v == clanname then
+            found = true
+        else
+            found = false
+        end
+    end
+    return found
+end
