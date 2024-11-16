@@ -35,7 +35,7 @@ function clansmod.players_online()
     
 end
 -- clansmod.sorting_algorithim. the average is going to be determined by the median, not the mean or mode.
-function clansmod.sorting_algorithim(average, median, levels)
+function clansmod.sorting_alg(average, median, levels)
     local online = clansmod.players()
     local clan_levels
     for i,v in ipairs(clansmod.clans) do
