@@ -70,5 +70,23 @@ core.register_chatcommand("testadd", {
                 clansmod.add_to_clan(player, msg, true)
             end
         end
-    end,
+    end
+})
+core.register_chatcommand("showclan members", {
+    func = function(player, param)
+        local player = core.get_player_by_name(name)
+        local player = player:get_player_name()
+        local playercs = player .. "-clan"
+        local table = clansmod.players_in_clan(storage:get_string(playercs))
+        
+        for i,v in ipairs(table) do
+            local str
+            if str == nil then
+                str = v
+            else
+                str = str .. ", " .. v
+            end
+        end
+        core.chat_send_player(player, str)
+    end
 })
