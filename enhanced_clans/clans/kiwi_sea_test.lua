@@ -51,23 +51,33 @@ end
 function clansmod.sorting_alg(average, median, levels)
     local online = clansmod.players_online()
     local clan_members
-    local clan_lvl
+    local clans_lvl --2d table
     local ptable
 
     for i,v in ipairs(ptable) do
-        player_lvl_cs = v .. "-level"
+        local player_lvl_cs = v .. "-level"
         local player_lvl = storage:get_string(player_lvl_cs)
-        if clan_lvl == nil then
-            clan_lvl = player_lvl
+        if clans_lvl == nil then
+            clans_lvl = player_lvl
         else
-            clan_lvl = clan_lvl + player_lvl
+            clans_lvl = clans_lvl + player_lvl
         end
     end
 
     for i,v in ipairs(clansmod.clans) do
         local clan = v
-        for _, a in ipairs(clansmod.players_in_clan(clan)) do
-            
+        local clan_players = clansmod.players_in_clan(clan)
+        for _, a in ipairs(clan_players) do
+            local playername = a:get_player_name()
+            local playercs = playername .. "-clan"
+            local player_lvl_cs = playername .. "-level"
+            local player_clan = storage:get_string(playercs)
+            local player_lvl = storage:get_string(player_lvl_cs)
+            if clans_lvl == nil then
+                clans_lvl = player_lvl
+            else
+                clans_lvl = clans_lvl + player_lvl
+            end
         table.insert(clan_members, clansmod.players_per_clan(v))
     end
 
