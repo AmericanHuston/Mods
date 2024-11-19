@@ -1,11 +1,17 @@
 local storage = core.get_mod_storage()
 clansmod = {}
-clansmod.clans = {"mesa", "mountain", "river", "grassland"}
-if storage:get_string("clans-table") == "" then
-    local data = clansmod.clans
-    storage:set_string("clans-table", core.serialize(data))
-else
+
+function clansmod.ser_clans()
+    storage:set_string("clans-table", core.serialize(clansmod.clans))
+end
+function clansmod.deser_clans()
     clansmod.clans = core.deserialize(storage:get_string("clans-table"))
+end
+if storage:get_string("clans-table") == nil then
+    clansmod.clans = {"mesa", "mountain", "river", "grassland"}
+    clansmod.ser_clans()
+else
+    clansmod.deser_clans()
 end
 
 --core.register_on_prejoinplayer()
@@ -15,13 +21,14 @@ core.register_privilege("eventadmin", {
     give_to_singleplayer = true
 })
 
-function clansmod.add_clan(issuername, clanname)
+function clansmod.add_clan(clanname)
     local found = clansmod.clan_exists(clanname)
     if found == true then
-        core.chat_send_player(player, "The clan " .. clanname .. " name is already taken!")
+        core.chat_send_all( "The clan " .. clanname .. " name is already taken!")
     else
         table.insert(clansmod.clans, clanname)
-        storage:set_string("clans-table", core.serialize(clansmod.clans))
+        clansmod.ser_clans()
+        clansmod.deser_clans()
         core.chat_send_all("A new clan has been created!")
     end 
 end
@@ -36,7 +43,8 @@ function clansmod.delete_clan(issuername, clanname)
             end
         end
         table.remove(clansmod.clans, clanpos)
-        storage:set_string(clansmod, core.serialize(clansmod.clans))
+        clansmod.ser_clans()
+        clansmod.deser_clans()
         core.chat_send_player(issuername, "Clan " .. clanname .. " has been deleted.")
     else
         core.chat_send_player(issuername, "Clan " .. clanname .. " does not exist.")
@@ -46,8 +54,9 @@ end
 function clansmod.add_to_clan(issuer, playername, random, clan) --MUST BE PLAYER NAME, NOT USERDATA
     local playercs = playername .. "-clan"
     local newclan
+    local tablelen = #clansmod.clans
     if random == true then --random is a bool
-        newclan = clansmod.clans[math.random(1, #clansmod.clans)] --have to use the len operator (#)
+        newclan = clansmod.clans[math.random(1, tablelen)] --have to use the len operator (#)
     else
         newclan = clan
     end
@@ -66,14 +75,14 @@ function clansmod.remove_from_clan(issuer, playername) --NAME, NOT USERDATA
     end
 end
 
-core.register_on_joinplayer(function(player, last_login)
-    local player = player:get_player_name()
-    clansmod.add_to_clan(nil, player, true)
-    if last_login == nil then
-        storage:set_int(player .. "-level", 0)
-    end
-end
-)
+-- core.register_on_joinplayer(function(player, last_login)
+--     local player = player:get_player_name()
+--     clansmod.add_to_clan(nil, player, true)
+--     if storage:get_int(player .. "-level") == nil then
+--         storage:set_int(player .. "-level", 0)
+--     end
+-- end
+-- )
 
 function clansmod.clan_exists(clanname)
     local found

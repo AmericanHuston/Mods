@@ -61,13 +61,8 @@ core.register_chatcommand("clearclan", {
 
 core.register_chatcommand("testadd", {
     func = function(player, param)
-        if core.check_player_privs(player, { interact=true }) ~= true then
-            core.chat_send_player(player, "You need eventadmin for this")
-        else
-            if param ~= "" then
-                local msg = param:match("^([%a%d_-]+)$")
-                clansmod.add_to_clan(player, msg, true)
-            end
+        for i,v in ipairs(clansmod.clans) do
+            core.chat_send_all(v)
         end
     end
 })
@@ -89,14 +84,25 @@ core.register_chatcommand("showclan_members", {
         core.chat_send_player(player, str)
     end
 })
-core.register_chatcommand("new_clan", {
+core.register_chatcommand("newclan", {
     func = function(player, param)
         local player = core.get_player_by_name(player)
         local player = player:get_player_name()
         if param ~= "" then
             local msg = param:match("^([%a%d_-]+)$")
-            clansmod.add_clan(player, msg)
+            clansmod.add_clan(msg)
         end
     end,
     description = "Usage: /new_clan <clanname>"
+})
+core.register_chatcommand("rmclan", {
+    func = function(player, param)
+        local player = core.get_player_by_name(player)
+        local player = player:get_player_name()
+        if param ~= "" then
+            local msg = param:match("^([%a%d_-]+)$")
+            clansmod.delete_clan(player, msg)
+        end
+    end,
+    description = "Usage: /rmclan <clanname>"
 })
