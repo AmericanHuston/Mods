@@ -30,7 +30,7 @@ function clansmod.add_clan(clanname)
         clansmod.ser_clans()
         clansmod.deser_clans()
         core.chat_send_all("A new clan has been created!")
-    end 
+    end
 end
 
 function clansmod.delete_clan(issuername, clanname)

@@ -2,8 +2,8 @@ local storage = core.get_mod_storage()
 
 core.register_chatcommand("showclan", {
     func = function(name, param)
-        local player = core.get_player_by_name(name)
-        local player = player:get_player_name()
+        local temp = core.get_player_by_name(name)
+        local player = temp:get_player_name()
         local playercs = param .. "-clan" --player clan storage
         if param == "" then
             local player_clan = storage:get_string(player .. "-clan")
@@ -19,10 +19,10 @@ core.register_chatcommand("showclan", {
 core.register_chatcommand("setclan", {
     func = function(name, param)
         local success = false
-        local player = core.get_player_by_name(name)
-        local player = player:get_player_name()
+        local temp = core.get_player_by_name(name)
+        local player = temp:get_player_name()
+        local msg, to = param:match("^([%a%d_-]+) (.+)$")
         if param ~= "" then
-            local msg, to = param:match("^([%a%d_-]+) (.+)$")
             for i,v in pairs(clansmod.clans) do
                 if to == v then
                     success = true
@@ -45,8 +45,8 @@ core.register_chatcommand("setclan", {
 
 core.register_chatcommand("clearclan", {
     func = function(name, param)
-        local player = core.get_player_by_name(name)
-        local player = player:get_player_name()
+        local temp = core.get_player_by_name(name)
+        local player = temp:get_player_name()
         if param ~= "" then
             local msg = param:match("^([%a%d_-]+)$")
             local playercs = msg .. "-clan" --player clan storage
@@ -67,27 +67,21 @@ core.register_chatcommand("testadd", {
     end
 })
 core.register_chatcommand("showclan_members", {
-    func = function(player, param)
-        local player = core.get_player_by_name(player)
-        local player = player:get_player_name()
+    func = function(name, param)
+        local temp = core.get_player_by_name(name)
+        local player = temp:get_player_name()
         local playercs = player .. "-clan"
         local table = clansmod.players_in_clan(storage:get_string(playercs))
-        
+        local str
         for i,v in ipairs(table) do
-            local str
-            if str == nil then
-                str = v
-            else
-                str = str .. ", " .. v
-            end
+            str = v
+            str = str .. ", " .. v
         end
         core.chat_send_player(player, str)
     end
 })
 core.register_chatcommand("newclan", {
     func = function(player, param)
-        local player = core.get_player_by_name(player)
-        local player = player:get_player_name()
         if param ~= "" then
             local msg = param:match("^([%a%d_-]+)$")
             clansmod.add_clan(msg)
@@ -96,9 +90,9 @@ core.register_chatcommand("newclan", {
     description = "Usage: /new_clan <clanname>"
 })
 core.register_chatcommand("rmclan", {
-    func = function(player, param)
-        local player = core.get_player_by_name(player)
-        local player = player:get_player_name()
+    func = function(name, param)
+        local temp = core.get_player_by_name(name)
+        local player = temp:get_player_name()
         if param ~= "" then
             local msg = param:match("^([%a%d_-]+)$")
             clansmod.delete_clan(player, msg)

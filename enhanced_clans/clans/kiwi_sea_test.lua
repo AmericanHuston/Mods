@@ -16,19 +16,18 @@ end
 
 
 function clansmod.players_online()
-    local ptable
+    local ptable = {}
     for _, player in ipairs(core.get_connected_players()) do
         table.insert(ptable, player:get_player_name())
     end
 
     local online = #ptable
     return online
-    
 end
 
 function clansmod.players_in_clan(clan)
     local playercs
-    local tbl_players_in_clan
+    local tbl_players_in_clan = {}
     for i,v in ipairs(core.get_connected_players) do
         playercs = v:get_player_name() .. "-clan"
         if storage:get_string(playercs) == clan then
@@ -38,7 +37,8 @@ function clansmod.players_in_clan(clan)
     return tostring(tbl_players_in_clan)
 end
 
-function clansmod.clan_level(clan)
+function clansmod.clan_level()
+    local clan_lvl
     for i,v in ipairs(clansmod.clans) do
         local clan = v
         local clan_players = clansmod.players_in_clan(clan)
@@ -60,7 +60,6 @@ function clansmod.sorting_alg()
     local online = clansmod.players_online()
     local clan_lvl
     local clan_players
-    
     for i,v in ipairs(clansmod.clans) do
         local clan = v
         clan_players = clansmod.players_in_clan(clan)
