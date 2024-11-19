@@ -7,7 +7,7 @@ end
 function clansmod.deser_clans()
     clansmod.clans = core.deserialize(storage:get_string("clans-table"))
 end
-if storage:get_string("clans-table") == nil then
+if storage:get_string("clans-table") == "" then
     clansmod.clans = {"mesa", "mountain", "river", "grassland"}
     clansmod.ser_clans()
 else
@@ -60,7 +60,7 @@ function clansmod.add_to_clan(issuer, playername, random, clan) --MUST BE PLAYER
     else
         newclan = clan
     end
-    if storage:get_string(playercs) == nil then
+    if storage:get_string(playercs) == "" then
         storage:set_string(playercs, newclan)
         if issuer ~= nil then
             core.chat_send_player(issuer, "Your clan has been set to " .. newclan)
@@ -75,14 +75,14 @@ function clansmod.remove_from_clan(issuer, playername) --NAME, NOT USERDATA
     end
 end
 
--- core.register_on_joinplayer(function(player, last_login)
---     local player = player:get_player_name()
---     clansmod.add_to_clan(nil, player, true)
---     if storage:get_int(player .. "-level") == nil then
---         storage:set_int(player .. "-level", 0)
---     end
--- end
--- )
+core.register_on_joinplayer(function(name, last_login)
+    local player = name:get_player_name()
+    clansmod.add_to_clan(nil, player, true)
+    if storage:get_int(player .. "-level") == nil then
+        storage:set_int(player .. "-level", 0)
+    end
+end
+)
 
 function clansmod.clan_exists(clanname)
     local found
