@@ -5,13 +5,12 @@ core.register_chatcommand("showclan", {
         local player = core.get_player_by_name(name)
         local player = player:get_player_name()
         local playercs = param .. "-clan" --player clan storage
-        if storage:get_string(playercs) ~= nil then
-            if param == "" then
-                core.chat_send_player(player, "Your clan is " .. storage:get_string(player .. "-clan"))
-            else
-                local player_clan = storage:get_string(playercs)
-                core.chat_send_player(player, param .. " is of the clan " .. player_clan)
-            end
+        if param == "" then
+            local player_clan = storage:get_string(player .. "-clan")
+            core.chat_send_player(player, "Your clan is " .. player_clan)
+        else
+            local player_clan = storage:get_string(playercs)
+            core.chat_send_player(player, param .. " is of the clan " .. player_clan)
         end
     end,
     description = "Usage: /showclan <player>"
@@ -72,9 +71,9 @@ core.register_chatcommand("testadd", {
         end
     end
 })
-core.register_chatcommand("showclan members", {
+core.register_chatcommand("showclan_members", {
     func = function(player, param)
-        local player = core.get_player_by_name(name)
+        local player = core.get_player_by_name(player)
         local player = player:get_player_name()
         local playercs = player .. "-clan"
         local table = clansmod.players_in_clan(storage:get_string(playercs))

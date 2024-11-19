@@ -1,10 +1,12 @@
 local storage = core.get_mod_storage()
 clansmod = {}
 clansmod.clans = {"mesa", "mountain", "river", "grassland"}
+storage:set_string("clans-table", nil)
 if storage:get_string("clans-table") == nil then
+    clansmod.clans = {"mesa", "mountain", "river", "grassland"}
     storage:set_string("clans-table", core.serialize(clansmod.table))
 else
-    clansmod.clans = core.deserialize(storage:get_string("clans-table"), safe = true)
+    clansmod.clans = core.deserialize(storage:get_string("clans-table"))
 end
 
 --core.register_on_prejoinplayer()
@@ -16,14 +18,13 @@ core.register_privilege("eventadmin", {
 
 function clansmod.add_clan(issuername, clanname)
     local found = clansmod.clan_exists(clanname)
-        if found == true then
-            core.chat_send_player(player, "The clan " .. clanname .. " name is already taken!")
-        elseif found == false then
-            table.insert(clansmod.clans, clanname)
-            storage:set_string("clans-table", core.serialize(clansmod.clans))
-            core.chat_send_all("A new clan has been created!")
-        end 
-    end
+    if found == true then
+        core.chat_send_player(player, "The clan " .. clanname .. " name is already taken!")
+    else
+        table.insert(clansmod.clans, clanname)
+        storage:set_string("clans-table", core.serialize(clansmod.clans))
+        core.chat_send_all("A new clan has been created!")
+    end 
 end
 
 function clansmod.delete_clan(issuername, clanname)
@@ -37,6 +38,11 @@ function clansmod.delete_clan(issuername, clanname)
         end
         table.remove(clansmod.clans, clanpos)
         storage:set_string(clansmod, core.serialize(clansmod.clans))
+        core.chat_send_player(issuername, "Clan " .. clanname .. " has been deleted.")
+    else
+        core.chat_send_player(issuername, "Clan " .. clanname .. " does not exist.")
+    end
+end
 
 function clansmod.add_to_clan(issuer, playername, random, clan) --MUST BE PLAYER NAME, NOT USERDATA
     local playercs = playername .. "-clan"
