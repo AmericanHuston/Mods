@@ -89,3 +89,14 @@ core.register_chatcommand("showclan_members", {
         core.chat_send_player(player, str)
     end
 })
+core.register_chatcommand("new_clan", {
+    func = function(player, param)
+        local player = core.get_player_by_name(player)
+        local player = player:get_player_name()
+        if param ~= "" then
+            local msg = param:match("^([%a%d_-]+)$")
+            clansmod.add_clan(player, msg)
+        end
+    end,
+    description = "Usage: /new_clan <clanname>"
+})

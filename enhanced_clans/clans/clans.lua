@@ -1,10 +1,9 @@
 local storage = core.get_mod_storage()
 clansmod = {}
 clansmod.clans = {"mesa", "mountain", "river", "grassland"}
-storage:set_string("clans-table", nil)
-if storage:get_string("clans-table") == nil then
-    clansmod.clans = {"mesa", "mountain", "river", "grassland"}
-    storage:set_string("clans-table", core.serialize(clansmod.table))
+if storage:get_string("clans-table") == "" then
+    local data = clansmod.clans
+    storage:set_string("clans-table", core.serialize(data))
 else
     clansmod.clans = core.deserialize(storage:get_string("clans-table"))
 end
