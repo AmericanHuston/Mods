@@ -59,7 +59,7 @@ core.register_chatcommand("clearclan", {
     description = "Usage: /clearclan <player>"
 })
 
-core.register_chatcommand("testadd", {
+core.register_chatcommand("listclans", {
     func = function(player, param)
         for i,v in ipairs(clansmod.clans) do
             core.chat_send_all(v)
@@ -87,7 +87,7 @@ core.register_chatcommand("newclan", {
             clansmod.add_clan(msg)
         end
     end,
-    description = "Usage: /new_clan <clanname>"
+    description = "Usage: /newclan <clanname>"
 })
 core.register_chatcommand("rmclan", {
     func = function(name, param)
