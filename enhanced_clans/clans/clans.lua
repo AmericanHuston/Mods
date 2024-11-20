@@ -75,14 +75,17 @@ function clansmod.remove_from_clan(issuer, playername) --NAME, NOT USERDATA
     end
 end
 
-core.register_on_joinplayer(function(name, last_login)
-    local player = name:get_player_name()
-    clansmod.add_to_clan(nil, player, true)
-    if storage:get_int(player .. "-level") == nil then
-        storage:set_int(player .. "-level", 0)
+function clansmod.players_in_clan(clan)
+    local playercs
+    local tbl_players_in_clan = {}
+    for i,v in ipairs(core.get_connected_players()) do
+        playercs = v:get_player_name() .. "-clan"
+        if storage:get_string(playercs) == clan then
+            table.insert(tbl_players_in_clan, v:get_player_name())
+        end
     end
+    return tbl_players_in_clan
 end
-)
 
 function clansmod.clan_exists(clanname)
     local found
@@ -95,3 +98,12 @@ function clansmod.clan_exists(clanname)
     end
     return found
 end
+
+core.register_on_joinplayer(function(name, last_login)
+    local player = name:get_player_name()
+    clansmod.add_to_clan(nil, player, true)
+    if storage:get_int(player .. "-level") == nil then
+        storage:set_int(player .. "-level", 0)
+    end
+end
+)

@@ -60,9 +60,11 @@ core.register_chatcommand("clearclan", {
 })
 
 core.register_chatcommand("listclans", {
-    func = function(player, param)
+    func = function(name, param)
+        local temp = core.get_player_by_name(name)
+        local player = temp:get_player_name()
         for i,v in ipairs(clansmod.clans) do
-            core.chat_send_all(v)
+            core.chat_send_player(player, v)
         end
     end
 })
@@ -72,13 +74,13 @@ core.register_chatcommand("showclan_members", {
         local player = temp:get_player_name()
         local playercs = player .. "-clan"
         local table = clansmod.players_in_clan(storage:get_string(playercs))
-        local str
+        local str = "The members of " .. storage:get_string(playercs) .. " are: "
         for i,v in ipairs(table) do
-            str = v
-            str = str .. ", " .. v
+            str = str .. v .. ", "
         end
         core.chat_send_player(player, str)
-    end
+    end,
+    description = "Usage: /showclan_members"
 })
 core.register_chatcommand("newclan", {
     func = function(player, param)

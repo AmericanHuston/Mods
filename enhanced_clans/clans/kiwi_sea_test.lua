@@ -25,17 +25,17 @@ function clansmod.players_online()
     return online
 end
 
-function clansmod.players_in_clan(clan)
-    local playercs
-    local tbl_players_in_clan = {}
-    for i,v in ipairs(core.get_connected_players) do
-        playercs = v:get_player_name() .. "-clan"
-        if storage:get_string(playercs) == clan then
-            table.insert(tbl_players_in_clan, v:get_player_name())
-        end
-    end
-    return tostring(tbl_players_in_clan)
-end
+-- function clansmod.players_in_clan(clan)
+--     local playercs
+--     local tbl_players_in_clan = {}
+--     for i,v in ipairs(core.get_connected_players) do
+--         playercs = v:get_player_name() .. "-clan"
+--         if storage:get_string(playercs) == clan then
+--             table.insert(tbl_players_in_clan, v:get_player_name())
+--         end
+--     end
+--     return tbl_players_in_clan
+-- end
 
 function clansmod.clan_level()
     local clan_lvl
