@@ -10,8 +10,9 @@ Playercs is a common variable that has been put in for easier and better access 
 Local level.
 Level is = player name and "-level"
 "-Level" is = to the number of people killed(killer) - number of how many times they have died(victim), or total sum of the two variables(killer - victim = level).
-Level is an important peice of the sorting alg, it is the divider.
-
+Level is an important peice of the sorting alg, it is the variable being divided. 
+Level has many uses for example, if you want to use level in your server to keep track of how many times somone has killed or been killed.
+All you would need to do is change line 101 from ,klevel ~= 5 to ,klevel ~= whatever number you want.(Must be positive)
 
 
 Alright, the cool stuff:
