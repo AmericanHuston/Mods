@@ -5,12 +5,12 @@ still under development.
 
 Local playercs.
 Playercs is = to the player name + "-clan".
-Playercs is a common variable that has been put in for easier and better access clan storage to the player and clan at the same time.
+Playercs is a common variable that has been put in for easier and better access to clan storage.
 
 Local level.
 Level is = player name and "-level"
 "-Level" is = to the number of people killed(killer) - number of how many times they have died(victim), or total sum of the two variables(killer - victim = level).
-
+Level is an important peice of the sorting alg, it is the divider.
 
 
 
