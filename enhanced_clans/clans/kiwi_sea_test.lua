@@ -59,10 +59,8 @@ end
 function clansmod.sorting_alg()
     local online = clansmod.players_online()
     local clan_lvl
-    local clan_players
     for i,v in ipairs(clansmod.clans) do
         local clan = v
-        clan_players = clansmod.players_in_clan(clan)
         clan_lvl = clansmod.clan_level(clan)
         storage:set_int(clan .. "-level", clan_lvl)
     end
