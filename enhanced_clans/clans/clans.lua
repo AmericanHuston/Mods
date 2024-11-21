@@ -68,7 +68,7 @@ function clansmod.add_to_clan(issuer, playername, random, clan) --MUST BE PLAYER
     end
 end
 
-function clansmod.remove_from_clan(issuer, playername) --NAME, NOT USERDATA
+function clansmod.remove_from_clan(playername) --NAME, NOT USERDATA
     local playercs = playername .. "-clan"
     if storage:get_string(playercs) then
         storage:set_string(playercs, nil)
