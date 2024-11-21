@@ -3,6 +3,17 @@ I'm by no means a professional coder, and as such this code isn't
 great. That being said, it all should work as intended. It's all 
 still under development.
 
+Local playercs.
+Playercs is = to the player name + "-clan".
+Playercs is a common variable that has been put in for easier and better access clan storage to the player and clan at the same time.
+
+Local level.
+Level is = player name and "-level"
+"-Level" is = to the number of people killed(killer) - number of how many times they have died(victim), or total sum of the two variables(killer - victim = level).
+
+
+
+
 Alright, the cool stuff:
 tables:
     clansmod.clans
@@ -15,3 +26,7 @@ functions:
         --- Sets a player to a clan, if one isn't given
         --- its randomly selected from clansmod.clans
     clansmod.remove_from_clan
+
+
+playername is = to the player name + the clan of the player.
+All this is is playercs a local that has been put in for easier and better access to the player and clan at the same time.
