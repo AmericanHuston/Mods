@@ -1,6 +1,7 @@
 local storage = core.get_mod_storage()
 
 core.register_chatcommand("showclan", {
+    privs = {eventadmin},
     func = function(name, param)
         local temp = core.get_player_by_name(name)
         local player = temp:get_player_name()
@@ -17,6 +18,7 @@ core.register_chatcommand("showclan", {
 })
 
 core.register_chatcommand("setclan", {
+    privs = {eventadmin},
     func = function(name, param)
         local success = false
         local temp = core.get_player_by_name(name)
@@ -44,6 +46,7 @@ core.register_chatcommand("setclan", {
 })
 
 core.register_chatcommand("clearclan", {
+    privs = {eventadmin},
     func = function(name, param)
         local temp = core.get_player_by_name(name)
         local player = temp:get_player_name()
@@ -60,6 +63,7 @@ core.register_chatcommand("clearclan", {
 })
 
 core.register_chatcommand("listclans", {
+    privs = {eventadmin},
     func = function(name, param)
         local temp = core.get_player_by_name(name)
         local player = temp:get_player_name()
@@ -69,6 +73,7 @@ core.register_chatcommand("listclans", {
     end
 })
 core.register_chatcommand("showclan_members", {
+    privs = {eventadmin},
     func = function(name, param)
         local temp = core.get_player_by_name(name)
         local player = temp:get_player_name()
@@ -83,6 +88,7 @@ core.register_chatcommand("showclan_members", {
     description = "Usage: /showclan_members"
 })
 core.register_chatcommand("newclan", {
+    privs = {eventadmin},
     func = function(player, param)
         if param ~= "" then
             local msg = param:match("^([%a%d_-]+)$")
@@ -92,6 +98,7 @@ core.register_chatcommand("newclan", {
     description = "Usage: /newclan <clanname>"
 })
 core.register_chatcommand("rmclan", {
+    privs = {eventadmin},
     func = function(name, param)
         local temp = core.get_player_by_name(name)
         local player = temp:get_player_name()
@@ -101,4 +108,9 @@ core.register_chatcommand("rmclan", {
         end
     end,
     description = "Usage: /rmclan <clanname>"
+})
+core.register_chatcommand("set_clan_spawn", {
+    privs = {eventadmin},
+    func = function(name, param)
+
 })
