@@ -2,7 +2,7 @@ unused_args = false
 allow_defined_top = true
 
 globals = {
-    "core", "clansmod", "enhanced_pvp"
+    "core", "clansmod", "enhanced_pvp","eventadmin"
 }
 
 read_globals = {

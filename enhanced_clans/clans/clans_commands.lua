@@ -109,8 +109,19 @@ core.register_chatcommand("rmclan", {
     end,
     description = "Usage: /rmclan <clanname>"
 })
-core.register_chatcommand("set_clan_spawn", {
+core.register_chatcommand("setclan_spawn", {
     privs = {eventadmin},
     func = function(name, param)
-
+        local temp = core.get_player_by_name(name)
+        local player = temp:get_player_name()
+        if param ~= "" then
+            local clanname,vx,vy,vz = param:match("^([%a]+) ([%d]+) (.+) (.+)$")
+            local clanss = clanname .. "-spawn" --clan spawn storage
+            local spawnPoint = {x = tonumber(vx), y = tonumber(vy), z = tonumber(vz)}
+            storage:set_string(clanss, core.serialize(spawnPoint))
+        else
+            core.chat_send_player(player, "Usage: /setclan_spawn <clanname> <x> <y> <z>")
+        end
+    end,
+    description = "Usage: /setclan_spawn <clanname> <x> <y> <z>"
 })

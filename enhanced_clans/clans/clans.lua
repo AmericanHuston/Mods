@@ -126,22 +126,3 @@ core.register_on_joinplayer(function(name, last_login)
     end
 end
 )
-
-core.register_on_dieplayer(function(name, reason)
-    local player = name:get_player_name()
-    local level = storage:get_int(player .. "-level")
-    for i,v in pairs(reason) do
-        if type(v) == "userdata" then
-            core.chat_send_player(player, v:get_player_name() .. " has killed you")
-            clansmod.killer(player, v:get_player_name())
-        end
-    end
-    if level ~= 0 then
-        level = level - 1
-        storage:set_int(player .. "-level", level)
-        core.chat_send_player(player, "Your level is now " .. level)
-    else
-        core.chat_send_player(player, "Your level is " .. level)
-    end
-end
-)
