@@ -125,3 +125,9 @@ core.register_chatcommand("setclan_spawn", {
     end,
     description = "Usage: /setclan_spawn <clanname> <x> <y> <z>"
 })
+
+-- core.register_chatcommand("game", {
+--     func = function(name)
+--         clansmod.clan_spawn_formspec_show_to(name)
+--     end,
+-- })

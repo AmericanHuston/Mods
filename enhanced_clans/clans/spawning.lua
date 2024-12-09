@@ -32,3 +32,41 @@ core.register_on_dieplayer(function(name, reason)
 end
 )
 
+core.register_node("clans:clanspawn", {
+    description = "Testing a formspec",
+    tiles = {"five_point_node.png"},
+    groups = {cracky = 1},
+    after_place_node = function(pos, placer)
+        -- This function is run when the chest node is placed.
+        -- The following code sets the formspec for chest.
+        -- Meta is a way of storing data onto a node.
+
+        local meta = core.get_meta(pos)
+        meta:set_string("formspec",
+        "formspec_version[4]"..
+        "size[8,4]"..
+        "label[0.375,0.5;Which clan should spawn members here?]"..
+        "field[Clanname;Clanname;;]"..
+        "button[3.5,3.0;3,0.8;submit;Submit]")
+    end,
+
+    on_receive_fields = function(pos, formname, fields, player)
+        if fields.quit then
+            return
+        end
+
+        local clan = fields.Clanname
+        local clanss = clan .. "-spawn"
+        storage:set_string(clanss, core.serialize(pos))
+        local meta = core.get_meta(pos)
+        meta:set_string("clan_on_node", fields.Clanname)
+
+        core.chat_send_all(fields.Clanname)
+    end,
+    on_destruct = function(pos)
+        local meta = core.get_meta(pos)
+        local clan = meta:get_string("clan_on_node")
+        local clanSpawnNew = {x = 0, y = 40, z = 0}
+        storage:set_string(clan .. "-spawn", core.serialize(clanSpawnNew))
+    end
+})

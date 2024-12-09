@@ -1,6 +1,16 @@
 local storage = core.get_mod_storage()
 clansmod = {}
 
+local _contexts = {}
+core.register_on_leaveplayer(function(player)
+    _contexts[player:get_player_name()] = nil
+end)
+local function get_context(name)
+    local context = _contexts[name] or {}
+    _contexts[name] = context
+    return context
+end
+
 function clansmod.ser_clans()
     storage:set_string("clans-table", core.serialize(clansmod.clans))
 end
@@ -126,3 +136,36 @@ core.register_on_joinplayer(function(name, last_login)
     end
 end
 )
+
+function clansmod.clan_spawn_node_formspec(name)
+    local text = "Which clan should spawn members here?"
+
+    local formspec = {
+        "formspec_version[4]",
+        "size[7,4]",
+        "label[0.375,0.5;", core.formspec_escape(text), "]",
+        "field[0.375,1.25;5.25,0.8;clanname;Clan Name;]",
+        "button[1.5,2.3;3,0.8;submit;Submit]"
+    }
+
+    return table.concat(formspec, "")
+end
+
+function clansmod.clan_spawn_formspec_show_to(name)
+    local context = get_context(name)
+    context.target = context.target or math.random(1, 10)
+
+    local fs = clansmod.clan_spawn_node_formspec(name, context)
+    core.show_formspec(name, "clansmod:clan_spawn_node_formspec", fs)
+end
+
+core.register_on_player_receive_fields(function(player, formname, fields)
+    if formname ~= "clansmod:clan_spawn_node_formspec" then
+        return
+    end
+
+    if fields.submit then
+        local pname = player:get_player_name()
+        core.chat_send_all(pname .. " said " .. fields.submit)
+    end
+end)
