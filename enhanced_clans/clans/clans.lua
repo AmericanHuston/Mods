@@ -97,13 +97,13 @@ function clansmod.players_in_clan(clan)
     return tbl_players_in_clan
 end
 
-function clansmod.killer(killer, victim)
+function clansmod.killer(victim, killer)
     local killercs = killer .. "-level"
     local victimcs = victim .. "-level"
     local klevel = storage:get_int(killercs)
     local vlevel = storage:get_int(victimcs)
 
-    if vlevel ~= 0 then
+    if vlevel > 0 then
         vlevel = vlevel - 1
         storage:set_int(victimcs, vlevel)
     end
@@ -113,6 +113,7 @@ function clansmod.killer(killer, victim)
         storage:set_int(killercs, klevel)
     end
 
+    core.chat_send_player(killer, "Your level is now " .. storage:get_int(killercs))
     core.chat_send_player(victim, "Your level is now " .. storage:get_int(victimcs))
 end
 
