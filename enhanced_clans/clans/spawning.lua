@@ -34,7 +34,7 @@ end
 
 core.register_node("clans:clanspawn", {
     description = "Testing a formspec",
-    tiles = {"five_point_node.png"},
+    tiles = {"clan_spawn_node.png"},
     groups = {cracky = 1},
     after_place_node = function(pos, placer)
         -- This function is run when the chest node is placed.
@@ -42,11 +42,12 @@ core.register_node("clans:clanspawn", {
         -- Meta is a way of storing data onto a node.
 
         local meta = core.get_meta(pos)
+        local prevClan = meta:get_string("clan_on_node") or ""
         meta:set_string("formspec",
         "formspec_version[4]"..
         "size[8,4]"..
         "label[0.375,0.5;Which clan should spawn members here?]"..
-        "field[Clanname;Clanname;;]"..
+        "field[Clanname;Clanname;".. core.formspec_escape(prevClan) ..";]"..
         "button[3.5,3.0;3,0.8;submit;Submit]")
     end,
 
@@ -55,10 +56,11 @@ core.register_node("clans:clanspawn", {
             return
         end
 
+        local meta = core.get_meta(pos)
         local clan = fields.Clanname
         local clanss = clan .. "-spawn"
+        pos = {x = pos.x, y = pos.y + 0.5, z = pos.z}
         storage:set_string(clanss, core.serialize(pos))
-        local meta = core.get_meta(pos)
         meta:set_string("clan_on_node", fields.Clanname)
 
         core.chat_send_all(fields.Clanname)
