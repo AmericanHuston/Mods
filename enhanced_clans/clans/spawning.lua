@@ -19,7 +19,7 @@ core.register_on_dieplayer(function(name, reason)
     for i,v in pairs(reason) do
         if type(v) == "userdata" then
             core.chat_send_player(player, v:get_player_name() .. " has killed you")
-            clansmod.killer(player, v:get_player_name())
+            clansmod.change_level_on_die(player, v:get_player_name())
         end
     end
     -- if level ~= 0 then

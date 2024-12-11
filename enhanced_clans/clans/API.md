@@ -17,17 +17,36 @@ All you would need to do is change line 101 from ,klevel ~= 5 to ,klevel ~= what
 
 Alright, the cool stuff:
 tables:
+    clansmod
+        --- All the functions and global tables
     clansmod.clans
         --- The avaliable clans, by default
-    end
 end
 
 functions:
+    clansmod.ser_clans()
+        --- Serializes all the clans
+        --- ONLY USE THIS WHEN MODIFYING CLANS PERMENENTLY
+    clansmod.deser_clans()
+        --- Deserializes all the clans
+        --- ONLY USE THIS WHEN RETRIVING PERMEMNET CLANS
+    clansmod.add_clan(clanname<string>)
+        --- Makes a new clan, premenently
+    clansmod.delete_clan(issuername<string>, clanname<string>)
+        --- Removes a clan, permemently
     clansmod.add_to_clan(issuer<string>, playername<string>, random<bool>, clan<optional,string>)
         --- Sets a player to a clan, if one isn't given
-        --- its randomly selected from clansmod.clans
-    clansmod.remove_from_clan
-
+        --- Its randomly selected from clansmod.clans
+    clansmod.remove_from_clan(playername<string>)
+        --- Remove the player from their current clan, setting to nil
+    clansmod.players_in_clan(clan<string>)
+        --- Returns a table with all the players in a clan
+    clansmod.change_level_on_die(victim<string>, killer<string>)
+        --- victim is who got killed, killer is who is killing
+        --- Changes both of their levels
+    clansmod.clan_exists(clanname<string>)
+        --- checks if a given clan exists
+    
 
 playername is = to the player name + the clan of the player.
 All this is is playercs a local that has been put in for easier and better access to the player and clan at the same time.
