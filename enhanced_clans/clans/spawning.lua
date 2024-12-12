@@ -35,7 +35,7 @@ end
 core.register_node("clans:clanspawn", {
     description = "Clan Spawn Node",
     tiles = {"clan_spawn_node.png"},
-    groups = {cracky = 1},
+    groups = {immortal = 1},
     after_place_node = function(pos, placer)
         -- This function is run when the chest node is placed.
         -- The following code sets the formspec for chest.
@@ -56,37 +56,60 @@ core.register_node("clans:clanspawn", {
             return
         end
 
-        local meta = core.get_meta(pos)
-        local clan = fields.Clanname
-        local clanss = clan .. "-spawn"
-        pos = {x = pos.x, y = pos.y + 0.5, z = pos.z}
-        storage:set_string(clanss, core.serialize(pos))
-        meta:set_string("clan_on_node", fields.Clanname)
+        if core.check_player_privs(player, { eventadmin=true }) then
+            local meta = core.get_meta(pos)
+            local clan = fields.Clanname
+            local clanss = clan .. "-spawn"
+            pos = {x = pos.x, y = pos.y + 0.5, z = pos.z}
+            storage:set_string(clanss, core.serialize(pos))
+            meta:set_string("clan_on_node", fields.Clanname)
 
-        core.chat_send_all(fields.Clanname)
+            core.chat_send_all(fields.Clanname)
+        else
+            core.chat_send_player(player:get_player_name(), "You aren't allowed to submit this form")
+        end
     end,
     on_destruct = function(pos)
         local meta = core.get_meta(pos)
         local clan = meta:get_string("clan_on_node")
         local clanSpawnNew = {x = 0, y = 40, z = 0}
         storage:set_string(clan .. "-spawn", core.serialize(clanSpawnNew))
+    end,
+    on_punch = function(pos, node, puncher)
+        if core.check_player_privs(puncher, { eventadmin=true }) then
+            core.dig_node(pos)
+        else
+            core.chat_send_player(puncher:get_player_name(), "You aren't allowed to break this node")
+        end
     end
 })
 
 core.register_node("clans:sacrifice", {
     description = "The sacrifice block",
     tiles = {"clans_sacrifice_node.png"},
-    groups = {cracky = 1},
+    groups = {immortal = 1},
+    diggable = true,
     after_place_node = function(pos, placer)
-        local player_clan = placer:get_string(placer .. "-clan")
+        local player_clan = storage:get_string(placer:get_player_name() .. "-clan")
+        local placed = storage:get_int("sacrifice_exist_" .. player_clan)
 
-        if storage:get_bool("sacrifice_exist_" .. player_clan) then
+        if placed == 1 then
             core.remove_node(pos)
-            core.chat_send_player(placer, "This node already exists for your clan")
+            core.chat_send_player(placer:get_player_name(), "This node already exists for your clan")
         else
-            storage:set_bool("sacrifice_exist_" .. player_clan, true)
+            storage:set_int("sacrifice_exist_" .. player_clan, 1)
         end
+    end,
+    on_punch = function(pos, node, puncher)
+        if core.check_player_privs(puncher, { eventadmin=true }) then
+            core.dig_node(pos)
+        else
+            core.chat_send_player(puncher:get_player_name(), "You aren't allowed to break this node")
+        end
+    end,
+    after_dig_node = function(pos, oldnode, oldmetadata, digger)
+        local player_clan = storage:get_string(digger:get_player_name() .. "-clan")
+        core.chat_send_all("on_dig happened")
+        storage:set_int("sacrifice_exist_" .. player_clan, 0)
     end
 })
-
-minetest.get_player_privs(player) -> {"eventadmin"=true}
