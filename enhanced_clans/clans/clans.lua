@@ -145,3 +145,28 @@ core.register_on_joinplayer(function(name, last_login)
     end
 end
 )
+
+function clansmod.drop(pos, istack)
+    --for i=1, istack:get_count() do
+        local obj = core.env:add_item(pos, istack:get_name() .. " " .. istack:get_count())
+        if obj ~= nil then
+            obj:get_luaentity().collect = true
+            local x = math.random(1, 5)
+            if math.random(1,2) == 1 then
+                x = -x
+            end
+            local z = math.random(1, 5)
+            if math.random(1,2) == 1 then
+                z = -z
+            end
+            obj:setvelocity({x=1/x, y=5, z=1/z})
+
+            -- FIXME this doesnt work for deactiveted objects
+            if core.setting_get("remove_items") and tonumber(core.setting_get("remove_items")) then
+                core.after(tonumber(core.setting_get("remove_items")), function(obj)
+                    obj:remove()
+                end, obj)
+            end
+        end
+    --end
+end

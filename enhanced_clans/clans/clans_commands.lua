@@ -141,3 +141,12 @@ core.register_chatcommand("set_default_spawn", {
     end,
     description = "Usage: /set_default_spawn <clanname> <x> <y> <z>"
 })
+
+core.register_chatcommand("delstuff", {
+    description = "For when you make a whopsie",
+    func = function(temp)
+        local name = core.get_player_by_name(temp)
+        local player = name:get_player_name()
+        storage:set_int("sacrifice_exist_"..storage:get_string(player.. "-clan"), 0)
+    end
+})

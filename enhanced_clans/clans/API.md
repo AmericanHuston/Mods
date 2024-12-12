@@ -48,8 +48,8 @@ functions:
         --- checks if a given clan exists
     clansmod.chat_send_clan(clanname<string>, msg<string>)
         --- Sends a chat message (msg) to the players in the clan of clanname
-        
-    
+    clansmod.drop(pos<tbl x,y,z>, istack<itemString>)
+        --- Drops an item (istack) at a specific location (pos)
 
 playername is = to the player name + the clan of the player.
 All this is is playercs a local that has been put in for easier and better access to the player and clan at the same time.
