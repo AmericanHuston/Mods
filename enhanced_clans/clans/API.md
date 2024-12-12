@@ -46,6 +46,9 @@ functions:
         --- Changes both of their levels
     clansmod.clan_exists(clanname<string>)
         --- checks if a given clan exists
+    clansmod.chat_send_clan(clanname<string>, msg<string>)
+        --- Sends a chat message (msg) to the players in the clan of clanname
+        
     
 
 playername is = to the player name + the clan of the player.

@@ -11,7 +11,7 @@ read_globals = {
 
     -- Builtin
     "vector", "ItemStack",
-    "dump", "DIR_DELIM", "VoxelArea", "Settings",
+    "dump", "DIR_DELIM", "VoxelArea", "Settings", "math"
 
     -- MTG
     "default", "sfinv", "creative",

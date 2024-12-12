@@ -129,6 +129,14 @@ function clansmod.clan_exists(clanname)
     return found
 end
 
+function clansmod.chat_send_clan(clanname, msg)
+    for i,player in ipairs(minetest.get_connected_players()) do
+        if storage:get_string(player:get_player_name() .. "-clan") == clanname then
+            core.chat_send_player(player:get_player_name(), msg)
+        end
+    end
+end
+
 core.register_on_joinplayer(function(name, last_login)
     local player = name:get_player_name()
     clansmod.add_to_clan(nil, player, true)

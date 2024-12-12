@@ -33,7 +33,7 @@ end
 )
 
 core.register_node("clans:clanspawn", {
-    description = "Testing a formspec",
+    description = "Clan Spawn Node",
     tiles = {"clan_spawn_node.png"},
     groups = {cracky = 1},
     after_place_node = function(pos, placer)
@@ -72,3 +72,21 @@ core.register_node("clans:clanspawn", {
         storage:set_string(clan .. "-spawn", core.serialize(clanSpawnNew))
     end
 })
+
+core.register_node("clans:sacrifice", {
+    description = "The sacrifice block",
+    tiles = {"clans_sacrifice_node.png"},
+    groups = {cracky = 1},
+    after_place_node = function(pos, placer)
+        local player_clan = placer:get_string(placer .. "-clan")
+
+        if storage:get_bool("sacrifice_exist_" .. player_clan) then
+            core.remove_node(pos)
+            core.chat_send_player(placer, "This node already exists for your clan")
+        else
+            storage:set_bool("sacrifice_exist_" .. player_clan, true)
+        end
+    end
+})
+
+minetest.get_player_privs(player) -> {"eventadmin"=true}
