@@ -125,3 +125,19 @@ core.register_chatcommand("setclan_spawn", {
     end,
     description = "Usage: /setclan_spawn <clanname> <x> <y> <z>"
 })
+
+core.register_chatcommand("set_default_spawn", {
+    privs = (eventadmin),
+    func = function(name, param)
+        local temp = core.get_player_by_name(name)
+        local player = temp:get_player_name()
+        if param ~= "" then
+            local vx,vy,vz = param:match("^([%d]+) (.+) (.+)$")
+            local spawnPoint = {x = tonumber(vx), y = tonumber(vy), z = tonumber(vz)}
+            storage:set_string("default-spawn", core.serialize(spawnPoint))
+        else
+            core.chat_send_player(player, "Usage: /set_default_spawn <clanname> <x> <y> <z>")
+        end
+    end,
+    description = "Usage: /set_default_spawn <clanname> <x> <y> <z>"
+})

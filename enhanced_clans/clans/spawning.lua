@@ -6,7 +6,7 @@ core.register_on_respawnplayer(function(userdata) --need userdata for name:get/s
     local clan = storage:get_string(playercs)
     local clanss = clan .. "-spawn"
     local spawnPoint = storage:get_string(clanss)
-    spawnPoint = core.deserialize(spawnPoint)
+    spawnPoint = core.deserialize(spawnPoint) or {x = 0, y = 30, z = 0}
     core.after(0.5,function()
         userdata:set_pos(spawnPoint)
     end
@@ -22,13 +22,6 @@ core.register_on_dieplayer(function(name, reason)
             clansmod.change_level_on_die(player, v:get_player_name())
         end
     end
-    -- if level ~= 0 then
-    --     level = level - 1
-    --     storage:set_int(player .. "-level", level)
-    --     core.chat_send_player(player, "Your level is now " .. level)
-    -- else
-    --    core.chat_send_player(player, "Your level is " .. level)
-    -- end
 end
 )
 
