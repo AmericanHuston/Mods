@@ -33,11 +33,17 @@ core.register_node("clans:sacrifice", {
 
 core.register_on_dieplayer(function(player, reason)
     local nodepos = core.find_node_near(player:get_pos(), 1, "clans:sacrifice")
+    local player_level = storage:get_string(player:get_player_name() .. "-level")
+    local drop
     if nodepos ~= nil then
         nodepos.x = math.floor(nodepos.x+0.5)
         nodepos.y = math.floor(nodepos.y+0.5)
         nodepos.z = math.floor(nodepos.z+0.5)
-        local drop = clansmod.random_reward(2)
+        if player_level <= 0 then
+            drop = "default:dirt"
+        else
+            drop = clansmod.random_reward(player_level)
+        end
         clansmod.drop(nodepos, ItemStack(drop)) --Soon to be random set of things
     end
 end)
