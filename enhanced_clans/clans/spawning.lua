@@ -35,12 +35,11 @@ core.register_node("clans:clanspawn", {
         -- Meta is a way of storing data onto a node.
 
         local meta = core.get_meta(pos)
-        local prevClan = meta:get_string("clan_on_node") or ""
         meta:set_string("formspec",
         "formspec_version[4]"..
         "size[8,4]"..
         "label[0.375,0.5;Which clan should spawn members here?]"..
-        "field[Clanname;Clanname;".. core.formspec_escape(prevClan) ..";]"..
+        "field[Clanname;Clanname;;]"..
         "button[3.5,3.0;3,0.8;submit;Submit]")
     end,
 

@@ -130,7 +130,7 @@ function clansmod.clan_exists(clanname)
 end
 
 function clansmod.chat_send_clan(clanname, msg)
-    for i,player in ipairs(minetest.get_connected_players()) do
+    for i,player in ipairs(core.get_connected_players()) do
         if storage:get_string(player:get_player_name() .. "-clan") == clanname then
             core.chat_send_player(player:get_player_name(), msg)
         end
@@ -169,4 +169,19 @@ function clansmod.drop(pos, istack)
             end
         end
     --end
+end
+
+function clansmod.random_reward(reward_level) --Anywhere between 1 and 3 levels
+    local reward
+    local level1_rewards = {"default:wood","default:ironblock","default:coalblock","default:gold_ingot"}
+    local level2_rewards = {"default:goldblock","default:mese","lifesteal_mod:fragment","default:diamond"}
+    local level3_rewards = {"lifesteal_mod:heart","default:diamondblock"}
+    if reward_level == 1 then
+        reward = level1_rewards[math.random(1,#level1_rewards)]
+    elseif reward_level == 2 then
+        reward = level2_rewards[math.random(1,#level2_rewards)]
+    elseif reward_level == 3 then
+        reward = level3_rewards[math.random(1,#level3_rewards)]
+    end
+    return reward
 end

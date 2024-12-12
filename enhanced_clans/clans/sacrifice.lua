@@ -18,14 +18,15 @@ core.register_node("clans:sacrifice", {
     end,
     on_punch = function(pos, node, puncher)
         if core.check_player_privs(puncher, { eventadmin=true }) then
-            core.dig_node(pos)
+            core.dig_node(pos, puncher)
         else
             core.chat_send_player(puncher:get_player_name(), "You aren't allowed to break this node")
         end
     end,
     after_dig_node = function(pos, oldnode, oldmetadata, digger)
-        local player_clan = storage:get_string(digger:get_player_name() .. "-clan")
-        core.chat_send_all("on_dig happened")
+        local playercs = digger:get_player_name() .. "-clan"
+        local player_clan = storage:get_string(playercs)
+        core.chat_send_all("on_dig happened" .. player_clan)
         storage:set_int("sacrifice_exist_" .. player_clan, 0)
     end
 })
@@ -36,7 +37,7 @@ core.register_on_dieplayer(function(player, reason)
         nodepos.x = math.floor(nodepos.x+0.5)
         nodepos.y = math.floor(nodepos.y+0.5)
         nodepos.z = math.floor(nodepos.z+0.5)
-
-        clansmod.drop(nodepos, ItemStack("default:mese")) --Soon to be random set of things
+        local drop = clansmod.random_reward(2)
+        clansmod.drop(nodepos, ItemStack(drop)) --Soon to be random set of things
     end
 end)

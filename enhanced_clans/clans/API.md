@@ -50,6 +50,8 @@ functions:
         --- Sends a chat message (msg) to the players in the clan of clanname
     clansmod.drop(pos<tbl x,y,z>, istack<itemString>)
         --- Drops an item (istack) at a specific location (pos)
+    clansmod.random_reward(reward_level<int>)
+        --- Returns a reward item, used with clansmod.drop()
 
 playername is = to the player name + the clan of the player.
 All this is is playercs a local that has been put in for easier and better access to the player and clan at the same time.
