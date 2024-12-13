@@ -1,6 +1,6 @@
-minetest.register_craftitem("enhanced_pvp:weapon1", {
+minetest.register_craftitem("clans_weapons:weapon1", {
     description = "A Powerful Weapon",
-    inventory_image = ""
+    inventory_image = "clans_weapons_water_sword.png"
 })
 
 core.register_craft({
