@@ -26,14 +26,13 @@ core.register_node("clans:sacrifice", {
     after_dig_node = function(pos, oldnode, oldmetadata, digger)
         local playercs = digger:get_player_name() .. "-clan"
         local player_clan = storage:get_string(playercs)
-        core.chat_send_all("on_dig happened" .. player_clan)
         storage:set_int("sacrifice_exist_" .. player_clan, 0)
     end
 })
 
 core.register_on_dieplayer(function(player, reason)
     local nodepos = core.find_node_near(player:get_pos(), 1, "clans:sacrifice")
-    local player_level = storage:get_string(player:get_player_name() .. "-level")
+    local player_level = storage:get_int(player:get_player_name() .. "-level")
     local drop
     if nodepos ~= nil then
         nodepos.x = math.floor(nodepos.x+0.5)
