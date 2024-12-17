@@ -28,7 +28,7 @@ end
 function clansmod.players_in_clan(clan)
     local playercs
     local tbl_players_in_clan = {}
-    for i,v in ipairs(core.get_connected_players) do
+    for i,v in ipairs(core.get_connected_players()) do
         playercs = v:get_player_name() .. "-clan"
         if storage:get_string(playercs) == clan then
             table.insert(tbl_players_in_clan, v:get_player_name())
